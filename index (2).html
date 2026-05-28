@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akampa Amos — Software Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --surface: #f0ede8;
+    --border: #e0dbd2;
+    --orange: #e8500a;
+    --orange2: #f27c3a;
+    --orange-light: rgba(232,80,10,0.08);
+    --text: #1a1814;
+    --muted: #7a7060;
+    --card: #ffffff;
+    --nav-bg: rgba(248,247,244,0.92);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--nav-bg);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--orange);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    font-style: italic;
+  }
+
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.25s;
+  }
+
+  .nav-links a:hover { color: var(--orange); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    align-items: center;
+    padding: 140px 56px 100px;
+    gap: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 45%;
+    height: 100%;
+    background: var(--surface);
+    z-index: 0;
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(232,80,10,0.25);
+    background: var(--orange-light);
+    color: var(--orange);
+    padding: 7px 20px;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    font-weight: 500;
+    opacity: 0;
+    animation: slideIn 0.7s ease 0.1s forwards;
+  }
+
+  .hero-tag-dot {
+    width: 5px; height: 5px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: blink 2s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    color: var(--text);
+    opacity: 0;
+    animation: slideIn 0.7s ease 0.2s forwards;
+  }
+
+  h1 .last-name {
+    font-style: italic;
+    color: var(--orange);
+    display: block;
+  }
+
+  .hero-divider {
+    width: 80px; height: 2px;
+    background: linear-gradient(90deg, var(--orange), transparent);
+    margin: 32px 0;
+    opacity: 0;
+    animation: slideIn 0.7s ease 0.3s forwards;
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    line-height: 1.9;
+    opacity: 0;
+    animation: slideIn 0.7s ease 0.4s forwards;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: slideIn 0.7s ease 0.5s forwards;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* HERO IMAGE - CIRCULAR */
+  .hero-image-wrap {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-top: 20px;
+    opacity: 0;
+    animation: slideIn 0.8s ease 0.6s forwards;
+  }
+
+  .hero-image-frame {
+    position: relative;
+    width: 160px;
+    height: 160px;
+  }
+
+  .hero-image-frame::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--orange2), transparent);
+    z-index: -1;
+  }
+
+  .hero-image-frame::after {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    border: 1px solid rgba(232,80,10,0.2);
+    z-index: -2;
+    animation: spin 12s linear infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .hero-image-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    border-radius: 50%;
+    border: 3px solid var(--bg);
+  }
+
+  .hero-image-tag {
+    margin-top: 16px;
+    background: var(--orange);
+    color: #fff;
+    padding: 6px 16px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* BUTTONS */
+  .btn {
+    padding: 14px 32px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #fff;
+    border: 1px solid var(--orange);
+  }
+
+  .btn-primary:hover {
+    background: #c94008;
+    border-color: #c94008;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(232,80,10,0.2);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--orange);
+    color: var(--orange);
+    transform: translateY(-3px);
+  }
+
+  /* SECTIONS */
+  section { padding: 110px 56px; position: relative; z-index: 1; }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    margin-bottom: 56px;
+    line-height: 1.15;
+    color: var(--text);
+  }
+
+  h2 em { font-style: italic; color: var(--orange); }
+
+  /* ABOUT */
+  .about-section { background: var(--surface); }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .about-text p {
+    color: var(--muted);
+    margin-bottom: 22px;
+    font-size: 1rem;
+    line-height: 1.9;
+  }
+
+  .about-text p strong { color: var(--text); font-weight: 500; }
+
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--orange);
+    transition: width 0.3s;
+  }
+
+  .stat-card:hover::before { width: 100%; }
+  .stat-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--orange);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* SKILLS */
+  .skills-section { background: var(--bg); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .skill-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 32px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 0;
+    background: var(--orange);
+    transition: height 0.3s;
+  }
+
+  .skill-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,0.08); transform: translateY(-4px); }
+  .skill-card:hover::before { height: 100%; }
+
+  .skill-icon { font-size: 1.6rem; margin-bottom: 16px; display: block; }
+
+  .skill-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 14px;
+    color: var(--text);
+  }
+
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .tag {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+  }
+
+  .skill-card:hover .tag {
+    border-color: rgba(232,80,10,0.3);
+    color: var(--orange);
+    background: var(--orange-light);
+  }
+
+  /* PROJECTS */
+  .projects-section { background: var(--surface); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--orange2));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .project-card:hover {
+    box-shadow: 0 20px 48px rgba(0,0,0,0.1);
+    transform: translateY(-6px);
+  }
+
+  .project-card:hover::after { transform: scaleX(1); }
+
+  .project-label {
+    font-size: 0.72rem;
+    color: var(--orange);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  .project-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-weight: 400;
+    margin-bottom: 18px;
+    line-height: 1.2;
+    color: var(--text);
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.92rem;
+    line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  /* EXPERIENCE */
+  .exp-section { background: var(--bg); }
+
+  .exp-item {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 56px;
+    padding: 44px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-item:last-child { border-bottom: none; }
+
+  .exp-date { font-size: 0.8rem; color: var(--orange); font-weight: 500; letter-spacing: 0.08em; padding-top: 4px; }
+  .exp-company { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+
+  .exp-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 16px;
+    color: var(--text);
+  }
+
+  .exp-list { list-style: none; }
+
+  .exp-list li {
+    color: var(--muted);
+    font-size: 0.92rem;
+    padding: 6px 0 6px 20px;
+    position: relative;
+    line-height: 1.7;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .exp-list li:last-child { border-bottom: none; }
+
+  .exp-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--orange);
+    font-size: 0.8rem;
+  }
+
+  /* CONTACT */
+  .contact-section { background: var(--surface); }
+  .contact-inner { max-width: 680px; }
+
+  .contact-intro {
+    font-size: 1.05rem;
+    color: var(--muted);
+    margin-bottom: 48px;
+    line-height: 1.9;
+  }
+
+  .contact-links { display: flex; flex-direction: column; gap: 12px; }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.25s;
+  }
+
+  .contact-link:hover {
+    border-color: var(--orange);
+    transform: translateX(6px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+
+  .contact-icon {
+    width: 42px; height: 42px;
+    background: var(--orange-light);
+    border: 1px solid rgba(232,80,10,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-label { font-weight: 500; font-size: 0.95rem; color: var(--text); }
+  .contact-value { font-size: 0.82rem; color: var(--muted); margin-top: 2px; }
+
+  /* FOOTER */
+  footer {
+    padding: 32px 56px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    background: var(--bg);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--orange);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 120px 24px 80px; }
+    .hero::before { display: none; }
+    .hero-image-wrap { display: none; }
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 80px 24px; }
+    .about-grid { grid-template-columns: 1fr; gap: 48px; }
+    .exp-item { grid-template-columns: 1fr; gap: 8px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Akampa Amos</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag"><span class="hero-tag-dot"></span> Available for freelance work</div>
+    <h1>Akampa<span class="last-name">Amos.</span></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Software Developer & Freelancer based in Kampala, Uganda. Building mobile apps, cloud systems, and IoT solutions that solve real problems.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">View My Work →</a>
+      <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-image-wrap">
+    <div class="hero-image-frame">
+      <img src="profile.jpg" alt="Akampa Amos" />
+      <div class="hero-image-tag">Software Developer</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="about-section">
+  <p class="section-label">About Me</p>
+  <div class="about-grid">
+    <div class="about-text">
+      <h2>Developer,<br>Problem Solver,<br><em>Builder.</em></h2>
+      <p>I'm a final-year <strong>Bachelor of Information Systems and Technology</strong> student at Makerere University, Uganda. I build software that works in the real world — with Uganda's connectivity, payment systems, and context in mind.</p>
+      <p>My capstone project is a <strong>Smart Parking Management System</strong> — a full-stack Flutter application integrating IoT sensors, Firebase cloud backend, and mobile money payments. Practical, local, impactful.</p>
+      <p>I completed a software development internship at <strong>Cirrocloud Solutions</strong>, contributing to live client applications including YillibaPro and CuraHMS.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card"><div class="stat-number">3+</div><div class="stat-label">Years Coding</div></div>
+      <div class="stat-card"><div class="stat-number">5+</div><div class="stat-label">Projects Built</div></div>
+      <div class="stat-card"><div class="stat-number">3</div><div class="stat-label">Months Internship</div></div>
+      <div class="stat-card"><div class="stat-number">2026</div><div class="stat-label">Graduating</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="skills-section">
+  <p class="section-label">What I Work With</p>
+  <h2>Skills &<br><em>Technologies</em></h2>
+  <div class="skills-grid">
+    <div class="skill-card"><span class="skill-icon">📱</span><div class="skill-title">Mobile Development</div><div class="skill-tags"><span class="tag">Flutter</span><span class="tag">Dart</span><span class="tag">Native Android</span></div></div>
+    <div class="skill-card"><span class="skill-icon">💻</span><div class="skill-title">Programming Languages</div><div class="skill-tags"><span class="tag">JavaScript</span><span class="tag">C</span><span class="tag">SQL</span><span class="tag">CSS</span></div></div>
+    <div class="skill-card"><span class="skill-icon">☁️</span><div class="skill-title">Backend & Cloud</div><div class="skill-tags"><span class="tag">Firebase</span><span class="tag">Cloud Functions</span><span class="tag">Firestore</span></div></div>
+    <div class="skill-card"><span class="skill-icon">🗄️</span><div class="skill-title">Databases</div><div class="skill-tags"><span class="tag">PostgreSQL</span><span class="tag">Firestore</span><span class="tag">Realtime DB</span></div></div>
+    <div class="skill-card"><span class="skill-icon">🔌</span><div class="skill-title">IoT & Hardware</div><div class="skill-tags"><span class="tag">ESP32</span><span class="tag">Arduino</span><span class="tag">MQTT</span><span class="tag">HC-SR04</span></div></div>
+    <div class="skill-card"><span class="skill-icon">🔗</span><div class="skill-title">APIs & Payments</div><div class="skill-tags"><span class="tag">REST APIs</span><span class="tag">Flutterwave</span><span class="tag">Pesapal</span><span class="tag">Google Maps</span></div></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="projects-section">
+  <p class="section-label">What I've Built</p>
+  <h2>Featured<br><em>Projects</em></h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-label">Capstone Project · 2025–2026</div>
+      <div class="project-title">Smart Parking Management System</div>
+      <p class="project-desc">A full-stack mobile application for real-time parking slot management in Uganda. Features IoT sensor integration, Firebase cloud backend, mobile money payments, and Google Maps navigation.</p>
+      <div class="skill-tags"><span class="tag">Flutter</span><span class="tag">Firebase</span><span class="tag">ESP32</span><span class="tag">MQTT</span><span class="tag">MTN MoMo</span></div>
+    </div>
+    <div class="project-card">
+      <div class="project-label">Internship · Cirrocloud Solutions</div>
+      <div class="project-title">YillibaPro & CuraHMS</div>
+      <p class="project-desc">Contributed to development of two client-facing applications during my internship. Worked across the full development lifecycle from requirements gathering through to deployment.</p>
+      <div class="skill-tags"><span class="tag">Mobile Dev</span><span class="tag">Team Collab</span><span class="tag">Client Apps</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="exp-section">
+  <p class="section-label">My Journey</p>
+  <h2>Education &<br><em>Experience</em></h2>
+  <div class="exp-item">
+    <div><div class="exp-date">2022 — 2026</div><div class="exp-company">Makerere University</div></div>
+    <div>
+      <div class="exp-role">BSc Information Systems & Technology</div>
+      <ul class="exp-list">
+        <li>Building Smart Parking Management System as capstone project</li>
+        <li>Coursework in Software Engineering, Database Management, IT Law & Ethics</li>
+        <li>Applying for BSc Computer Science at University of London for further studies</li>
+      </ul>
+    </div>
+  </div>
+  <div class="exp-item">
+    <div><div class="exp-date">2024</div><div class="exp-company">Cirrocloud Solutions</div></div>
+    <div>
+      <div class="exp-role">Software Developer Intern</div>
+      <ul class="exp-list">
+        <li>Contributed to YillibaPro and CuraHMS client applications</li>
+        <li>Worked in a structured team following professional development workflows</li>
+        <li>Performed testing, debugging, and quality assurance tasks</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact-section">
+  <p class="section-label">Let's Talk</p>
+  <h2>Get<br><em>In Touch</em></h2>
+  <div class="contact-inner">
+    <p class="contact-intro">Open to freelance projects, remote work opportunities, and collaborations. Based in Kampala, Uganda — working globally.</p>
+    <div class="contact-links">
+      <a href="mailto:aakampa98@gmail.com" class="contact-link">
+        <div class="contact-icon">✉️</div>
+        <div><div class="contact-label">Email</div><div class="contact-value">aakampa98@gmail.com</div></div>
+      </a>
+      <a href="https://github.com/AkampaUN" target="_blank" class="contact-link">
+        <div class="contact-icon">🐙</div>
+        <div><div class="contact-label">GitHub</div><div class="contact-value">github.com/AkampaUN</div></div>
+      </a>
+      <a href="tel:+256770534239" class="contact-link">
+        <div class="contact-icon">📞</div>
+        <div><div class="contact-label">Phone / WhatsApp</div><div class="contact-value">+256 770 534 239</div></div>
+      </a>
+      <a href="#" class="contact-link">
+        <div class="contact-icon">📍</div>
+        <div><div class="contact-label">Location</div><div class="contact-value">Kampala, Uganda — Available Remotely</div></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">Akampa Amos</span>
+  <span>© 2026 — Kampala, Uganda 🇺🇬</span>
+</footer>
+
+</body>
+</html>
